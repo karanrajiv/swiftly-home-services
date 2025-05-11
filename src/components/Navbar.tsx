@@ -1,12 +1,31 @@
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+interface User {
+  email: string;
+  name: string;
+}
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+  
+  // Check if user is logged in
+  useEffect(() => {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      try {
+        setCurrentUser(JSON.parse(userStr));
+      } catch (err) {
+        localStorage.removeItem("user");
+      }
+    }
+  }, []);
   
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -26,6 +45,16 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setCurrentUser(null);
+    navigate("/");
+    // Close mobile menu if open
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
   };
 
   return (
@@ -54,9 +83,31 @@ const Navbar = () => {
             <a href="#testimonials" className="text-gray-700 hover:text-swiftly-blue font-medium">
               Testimonials
             </a>
-            <Button variant="default" className="bg-swiftly-blue hover:bg-swiftly-darkblue text-white">
-              Book Now
-            </Button>
+            
+            {currentUser ? (
+              <div className="flex items-center gap-4">
+                <Link to="/dashboard" className="flex items-center gap-2 text-gray-700 hover:text-swiftly-blue font-medium">
+                  <User size={18} />
+                  {currentUser.name}
+                </Link>
+                <Button 
+                  variant="outline" 
+                  onClick={handleLogout}
+                  className="border-swiftly-blue text-swiftly-blue hover:bg-swiftly-blue/10"
+                >
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <Link to="/login" className="text-gray-700 hover:text-swiftly-blue font-medium">
+                  Sign In
+                </Link>
+                <Button variant="default" className="bg-swiftly-blue hover:bg-swiftly-darkblue text-white">
+                  Book Now
+                </Button>
+              </div>
+            )}
           </div>
           
           {/* Mobile Menu Button */}
@@ -78,38 +129,71 @@ const Navbar = () => {
               <Link 
                 to="/" 
                 className="text-gray-700 hover:text-swiftly-blue font-medium py-2"
-                onClick={toggleMobileMenu}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
               </Link>
               <a 
                 href="#services" 
                 className="text-gray-700 hover:text-swiftly-blue font-medium py-2"
-                onClick={toggleMobileMenu}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Services
               </a>
               <a 
                 href="#how-it-works" 
                 className="text-gray-700 hover:text-swiftly-blue font-medium py-2"
-                onClick={toggleMobileMenu}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 How It Works
               </a>
               <a 
                 href="#testimonials" 
                 className="text-gray-700 hover:text-swiftly-blue font-medium py-2"
-                onClick={toggleMobileMenu}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Testimonials
               </a>
-              <Button 
-                variant="default" 
-                className="bg-swiftly-blue hover:bg-swiftly-darkblue text-white w-full"
-                onClick={toggleMobileMenu}
-              >
-                Book Now
-              </Button>
+              
+              {currentUser ? (
+                <>
+                  <Link 
+                    to="/dashboard" 
+                    className="flex items-center gap-2 text-gray-700 hover:text-swiftly-blue font-medium py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User size={18} />
+                    My Account
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    onClick={handleLogout}
+                    className="border-swiftly-blue text-swiftly-blue hover:bg-swiftly-blue/10 w-full"
+                  >
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    to="/login" 
+                    className="text-gray-700 hover:text-swiftly-blue font-medium py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Button 
+                    variant="default" 
+                    className="bg-swiftly-blue hover:bg-swiftly-darkblue text-white w-full"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigate("/login");
+                    }}
+                  >
+                    Book Now
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
