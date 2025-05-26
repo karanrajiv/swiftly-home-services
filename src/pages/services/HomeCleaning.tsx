@@ -2,12 +2,16 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Clock, Users, Shield, Star } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useToast } from "@/hooks/use-toast";
 
 const HomeCleaning = () => {
   const [selectedPackage, setSelectedPackage] = useState("basic");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { toast } = useToast();
 
   const packages = [
     {
@@ -32,6 +36,14 @@ const HomeCleaning = () => {
       includes: ["Everything in Deep", "Inside cabinets", "Oven cleaning", "Refrigerator cleaning", "Organizing"]
     }
   ];
+
+  const handleBooking = () => {
+    toast({
+      title: "Booking Confirmed!",
+      description: `Your ${packages.find(p => p.id === selectedPackage)?.name} service has been booked for €50.`,
+    });
+    setIsDialogOpen(false);
+  };
 
   return (
     <div className="min-h-screen">
@@ -106,9 +118,57 @@ const HomeCleaning = () => {
 
           {/* Book Now */}
           <div className="text-center">
-            <Button size="lg" className="bg-swiftly-blue hover:bg-swiftly-darkblue px-8 py-6 text-lg">
-              Book Now for €50
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button size="lg" className="bg-swiftly-blue hover:bg-swiftly-darkblue px-8 py-6 text-lg">
+                  Book Now for €50
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Confirm Your Booking</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold mb-2">
+                      {packages.find(p => p.id === selectedPackage)?.name}
+                    </h3>
+                    <p className="text-2xl font-bold text-swiftly-blue mb-2">€50</p>
+                    <Badge variant="secondary">
+                      {packages.find(p => p.id === selectedPackage)?.duration}
+                    </Badge>
+                  </div>
+                  
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-2">Service includes:</h4>
+                    <ul className="space-y-1">
+                      {packages.find(p => p.id === selectedPackage)?.includes.map((item, index) => (
+                        <li key={index} className="flex items-center text-sm">
+                          <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setIsDialogOpen(false)}
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                    <Button 
+                      onClick={handleBooking}
+                      className="flex-1 bg-swiftly-blue hover:bg-swiftly-darkblue"
+                    >
+                      Confirm Booking
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>
