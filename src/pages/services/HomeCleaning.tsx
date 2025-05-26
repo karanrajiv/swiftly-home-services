@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,21 +13,21 @@ const HomeCleaning = () => {
     {
       id: "basic",
       name: "Basic Cleaning",
-      price: "$49",
+      price: "€50",
       duration: "2-3 hours",
       includes: ["Dusting", "Vacuuming", "Bathroom cleaning", "Kitchen cleaning"]
     },
     {
       id: "deep",
       name: "Deep Cleaning",
-      price: "$99",
+      price: "€50",
       duration: "4-5 hours",
       includes: ["Everything in Basic", "Inside appliances", "Baseboards", "Window sills", "Light fixtures"]
     },
     {
       id: "premium",
       name: "Premium Cleaning",
-      price: "$149",
+      price: "€50",
       duration: "5-6 hours",
       includes: ["Everything in Deep", "Inside cabinets", "Oven cleaning", "Refrigerator cleaning", "Organizing"]
     }
@@ -108,7 +107,7 @@ const HomeCleaning = () => {
           {/* Book Now */}
           <div className="text-center">
             <Button size="lg" className="bg-swiftly-blue hover:bg-swiftly-darkblue px-8 py-6 text-lg">
-              Book Now for {packages.find(p => p.id === selectedPackage)?.price}
+              Book Now for €50
             </Button>
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Wrench, Clock, Shield, Award } from "lucide-react";
@@ -63,7 +62,7 @@ const ApplianceRepair = () => {
 
           <div className="text-center">
             <Button size="lg" className="bg-green-600 hover:bg-green-700 px-8 py-6 text-lg">
-              Book Repair Service
+              Book Repair Service - €50
             </Button>
           </div>
         </div>

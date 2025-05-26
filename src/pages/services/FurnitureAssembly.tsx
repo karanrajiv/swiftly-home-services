@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sofa, Clock, Shield, Wrench } from "lucide-react";
@@ -63,7 +62,7 @@ const FurnitureAssembly = () => {
 
           <div className="text-center">
             <Button size="lg" className="bg-amber-600 hover:bg-amber-700 px-8 py-6 text-lg">
-              Book Assembly Service
+              Book Assembly Service - €50
             </Button>
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShieldCheck, Clock, Shield, Bug } from "lucide-react";
@@ -63,7 +62,7 @@ const PestControl = () => {
 
           <div className="text-center">
             <Button size="lg" className="bg-red-600 hover:bg-red-700 px-8 py-6 text-lg">
-              Book Pest Control
+              Book Pest Control - €50
             </Button>
           </div>
         </div>

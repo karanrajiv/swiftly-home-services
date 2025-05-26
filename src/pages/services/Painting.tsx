@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PaintBucket, Clock, Shield, Palette } from "lucide-react";
@@ -63,7 +62,7 @@ const Painting = () => {
 
           <div className="text-center">
             <Button size="lg" className="bg-orange-600 hover:bg-orange-700 px-8 py-6 text-lg">
-              Book Painting Service
+              Book Painting Service - €50
             </Button>
           </div>
         </div>
