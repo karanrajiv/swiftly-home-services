@@ -44,7 +44,7 @@ const services = [
     description: "Transform your space with professional painting services.",
     color: "bg-orange-50",
     iconColor: "text-orange-600",
-    link: "/login"
+    link: "/services/painting"
   },
   {
     icon: ShowerHead,
@@ -52,7 +52,7 @@ const services = [
     description: "Spotless and sanitized bathrooms with professional cleaning.",
     color: "bg-teal-50",
     iconColor: "text-teal-600",
-    link: "/login"
+    link: "/services/bathroom-cleaning"
   },
   {
     icon: Fan,
@@ -60,7 +60,7 @@ const services = [
     description: "Keep cool with our expert AC repair and maintenance.",
     color: "bg-indigo-50",
     iconColor: "text-indigo-600",
-    link: "/login"
+    link: "/services/ac-repair"
   },
   {
     icon: Sofa,
@@ -68,7 +68,7 @@ const services = [
     description: "Get your new furniture professionally assembled.",
     color: "bg-amber-50",
     iconColor: "text-amber-600",
-    link: "/login"
+    link: "/services/furniture-assembly"
   },
   {
     icon: ShieldCheck,
@@ -76,7 +76,7 @@ const services = [
     description: "Effective pest control solutions for your home.",
     color: "bg-red-50",
     iconColor: "text-red-600",
-    link: "/login"
+    link: "/services/pest-control"
   },
 ];
 
