@@ -11,6 +11,7 @@ import {
   Fan 
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -19,6 +20,7 @@ const services = [
     description: "Professional deep cleaning services for your entire home.",
     color: "bg-blue-50",
     iconColor: "text-swiftly-blue",
+    link: "/services/home-cleaning"
   },
   {
     icon: Settings,
@@ -26,6 +28,7 @@ const services = [
     description: "Expert repair services for all your home appliances.",
     color: "bg-green-50",
     iconColor: "text-green-600",
+    link: "/services/appliance-repair"
   },
   {
     icon: Briefcase,
@@ -33,6 +36,7 @@ const services = [
     description: "Skilled plumbers to fix all your plumbing issues.",
     color: "bg-purple-50",
     iconColor: "text-purple-600",
+    link: "/services/plumbing"
   },
   {
     icon: PaintBucket,
@@ -40,6 +44,7 @@ const services = [
     description: "Transform your space with professional painting services.",
     color: "bg-orange-50",
     iconColor: "text-orange-600",
+    link: "/login"
   },
   {
     icon: ShowerHead,
@@ -47,6 +52,7 @@ const services = [
     description: "Spotless and sanitized bathrooms with professional cleaning.",
     color: "bg-teal-50",
     iconColor: "text-teal-600",
+    link: "/login"
   },
   {
     icon: Fan,
@@ -54,6 +60,7 @@ const services = [
     description: "Keep cool with our expert AC repair and maintenance.",
     color: "bg-indigo-50",
     iconColor: "text-indigo-600",
+    link: "/login"
   },
   {
     icon: Sofa,
@@ -61,6 +68,7 @@ const services = [
     description: "Get your new furniture professionally assembled.",
     color: "bg-amber-50",
     iconColor: "text-amber-600",
+    link: "/login"
   },
   {
     icon: ShieldCheck,
@@ -68,6 +76,7 @@ const services = [
     description: "Effective pest control solutions for your home.",
     color: "bg-red-50",
     iconColor: "text-red-600",
+    link: "/login"
   },
 ];
 
@@ -86,9 +95,9 @@ const ServicesSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <div key={index} className="service-card">
-              <Card className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-all">
-                <CardContent className={`p-6 ${service.color}`}>
+            <Link key={index} to={service.link} className="service-card">
+              <Card className="overflow-hidden border-0 shadow-sm hover:shadow-lg transition-all cursor-pointer group">
+                <CardContent className={`p-6 ${service.color} group-hover:scale-105 transition-transform`}>
                   <div className="flex flex-col items-center text-center">
                     <div className={`mb-4 p-3 rounded-full ${service.color} ${service.iconColor}`}>
                       <service.icon size={32} />
@@ -98,7 +107,7 @@ const ServicesSection = () => {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </Link>
           ))}
         </div>
         

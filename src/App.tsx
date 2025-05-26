@@ -9,6 +9,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import HomeCleaning from "./pages/services/HomeCleaning";
+import ApplianceRepair from "./pages/services/ApplianceRepair";
+import Plumbing from "./pages/services/Plumbing";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +26,9 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/services/home-cleaning" element={<HomeCleaning />} />
+          <Route path="/services/appliance-repair" element={<ApplianceRepair />} />
+          <Route path="/services/plumbing" element={<Plumbing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
