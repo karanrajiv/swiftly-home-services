@@ -1,14 +1,32 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wrench, Clock, Shield, Award } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const ApplianceRepair = () => {
-  const appliances = [
-    "Washing Machine", "Refrigerator", "Dishwasher", "Microwave", 
-    "Air Conditioner", "Water Heater", "Dryer", "Oven"
-  ];
+  const applianceCategories = {
+    kitchen: {
+      name: "Kitchen Appliances",
+      items: ["Refrigerator", "Dishwasher", "Microwave", "Oven"],
+      description: "Expert repair services for all your kitchen appliances. We handle everything from cooling systems to heating elements.",
+      commonIssues: ["Not cooling/heating properly", "Strange noises", "Water leaks", "Electrical issues"]
+    },
+    laundry: {
+      name: "Laundry Appliances", 
+      items: ["Washing Machine", "Dryer"],
+      description: "Professional washing machine and dryer repair services to keep your laundry routine running smoothly.",
+      commonIssues: ["Won't start", "Not spinning", "Water not draining", "Excessive noise"]
+    },
+    hvac: {
+      name: "HVAC & Water",
+      items: ["Air Conditioner", "Water Heater"],
+      description: "Climate control and hot water system repairs for year-round comfort in your home.",
+      commonIssues: ["No hot water", "Poor cooling", "High energy bills", "Temperature fluctuations"]
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -49,15 +67,50 @@ const ApplianceRepair = () => {
 
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-center mb-8">Appliances We Repair</h2>
-            <div className="grid md:grid-cols-4 gap-4">
-              {appliances.map((appliance, index) => (
-                <Card key={index}>
-                  <CardContent className="p-4 text-center">
-                    <h3 className="font-semibold">{appliance}</h3>
-                  </CardContent>
-                </Card>
+            
+            <Tabs defaultValue="kitchen" className="w-full">
+              <TabsList className="grid w-full grid-cols-3 mb-8">
+                <TabsTrigger value="kitchen">Kitchen</TabsTrigger>
+                <TabsTrigger value="laundry">Laundry</TabsTrigger>
+                <TabsTrigger value="hvac">HVAC & Water</TabsTrigger>
+              </TabsList>
+              
+              {Object.entries(applianceCategories).map(([key, category]) => (
+                <TabsContent key={key} value={key} className="space-y-6">
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
+                    <p className="text-gray-600">{category.description}</p>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold mb-4">Appliances We Service:</h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        {category.items.map((appliance, index) => (
+                          <Card key={index}>
+                            <CardContent className="p-3 text-center">
+                              <h5 className="font-medium text-sm">{appliance}</h5>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-semibold mb-4">Common Issues We Fix:</h4>
+                      <ul className="space-y-2">
+                        {category.commonIssues.map((issue, index) => (
+                          <li key={index} className="flex items-center text-sm text-gray-600">
+                            <span className="w-2 h-2 bg-green-600 rounded-full mr-3"></span>
+                            {issue}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </TabsContent>
               ))}
-            </div>
+            </Tabs>
           </div>
 
           <div className="text-center">
