@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -21,21 +22,21 @@ const HomeCleaning = () => {
     {
       id: "basic",
       name: "Basic Cleaning",
-      price: "€50",
+      price: "€0",
       duration: "2-3 hours",
       includes: ["Dusting", "Vacuuming", "Bathroom cleaning", "Kitchen cleaning"]
     },
     {
       id: "deep",
       name: "Deep Cleaning",
-      price: "€50",
+      price: "€0",
       duration: "4-5 hours",
       includes: ["Everything in Basic", "Inside appliances", "Baseboards", "Window sills", "Light fixtures"]
     },
     {
       id: "premium",
       name: "Premium Cleaning",
-      price: "€50",
+      price: "€0",
       duration: "5-6 hours",
       includes: ["Everything in Deep", "Inside cabinets", "Oven cleaning", "Refrigerator cleaning", "Organizing"]
     }
@@ -47,7 +48,7 @@ const HomeCleaning = () => {
       const cartItem = {
         id: `home-cleaning-${selectedPackage}`,
         name: selectedPkg.name,
-        price: 50,
+        price: 0,
         duration: selectedPkg.duration,
         includes: selectedPkg.includes,
         serviceType: "Home Cleaning"
@@ -141,7 +142,7 @@ const HomeCleaning = () => {
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button size="lg" className="bg-swiftly-blue hover:bg-swiftly-darkblue px-8 py-6 text-lg">
-                  Book Now for €50
+                  Book Now for €0
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
@@ -153,7 +154,7 @@ const HomeCleaning = () => {
                     <h3 className="text-lg font-semibold mb-2">
                       {packages.find(p => p.id === selectedPackage)?.name}
                     </h3>
-                    <p className="text-2xl font-bold text-swiftly-blue mb-2">€50</p>
+                    <p className="text-2xl font-bold text-swiftly-blue mb-2">€0</p>
                     <Badge variant="secondary">
                       {packages.find(p => p.id === selectedPackage)?.duration}
                     </Badge>
