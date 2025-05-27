@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,11 +8,14 @@ import { Clock, Users, Shield, Star } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/contexts/CartContext";
 
 const HomeCleaning = () => {
   const [selectedPackage, setSelectedPackage] = useState("basic");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
+  const { addItem } = useCart();
+  const navigate = useNavigate();
 
   const packages = [
     {
@@ -38,11 +42,27 @@ const HomeCleaning = () => {
   ];
 
   const handleBooking = () => {
-    toast({
-      title: "Booking Confirmed!",
-      description: `Your ${packages.find(p => p.id === selectedPackage)?.name} service has been booked for €50.`,
-    });
-    setIsDialogOpen(false);
+    const selectedPkg = packages.find(p => p.id === selectedPackage);
+    if (selectedPkg) {
+      const cartItem = {
+        id: `home-cleaning-${selectedPackage}`,
+        name: selectedPkg.name,
+        price: 50,
+        duration: selectedPkg.duration,
+        includes: selectedPkg.includes,
+        serviceType: "Home Cleaning"
+      };
+      
+      addItem(cartItem);
+      
+      toast({
+        title: "Added to Cart!",
+        description: `${selectedPkg.name} has been added to your cart.`,
+      });
+      
+      setIsDialogOpen(false);
+      navigate('/checkout');
+    }
   };
 
   return (
