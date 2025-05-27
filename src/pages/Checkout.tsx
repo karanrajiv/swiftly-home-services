@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, ArrowLeft } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Trash2, ArrowLeft, CreditCard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -16,6 +18,13 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [paymentData, setPaymentData] = useState({
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    cardholderName: ''
+  });
 
   const handleRemoveItem = (id: string) => {
     removeItem(id);
@@ -25,14 +34,31 @@ const Checkout = () => {
     });
   };
 
-  const handleProceedToPayment = async () => {
+  const handleProceedToPayment = () => {
+    setShowPaymentForm(true);
+  };
+
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsProcessing(true);
     
     // Simulate payment processing
     setTimeout(() => {
+      // Store the order in localStorage for dashboard display
+      const orders = JSON.parse(localStorage.getItem('userOrders') || '[]');
+      const newOrder = {
+        id: `order-${Date.now()}`,
+        items: [...items],
+        total: getTotalPrice(),
+        date: new Date().toISOString(),
+        status: 'confirmed'
+      };
+      orders.push(newOrder);
+      localStorage.setItem('userOrders', JSON.stringify(orders));
+      
       toast({
-        title: "Order Confirmed!",
-        description: "Your booking has been confirmed. We'll contact you soon.",
+        title: "Payment Successful!",
+        description: "Your booking has been confirmed. Check your dashboard for details.",
       });
       clearCart();
       navigate('/dashboard');
@@ -129,6 +155,71 @@ const Checkout = () => {
                     ))}
                   </CardContent>
                 </Card>
+
+                {/* Payment Form */}
+                {showPaymentForm && (
+                  <Card className="mt-6">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <CreditCard className="h-5 w-5" />
+                        Payment Details
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                        <div>
+                          <Label htmlFor="cardNumber">Card Number</Label>
+                          <Input
+                            id="cardNumber"
+                            placeholder="1234 5678 9012 3456"
+                            value={paymentData.cardNumber}
+                            onChange={(e) => setPaymentData({...paymentData, cardNumber: e.target.value})}
+                            required
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="expiryDate">Expiry Date</Label>
+                            <Input
+                              id="expiryDate"
+                              placeholder="MM/YY"
+                              value={paymentData.expiryDate}
+                              onChange={(e) => setPaymentData({...paymentData, expiryDate: e.target.value})}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="cvv">CVV</Label>
+                            <Input
+                              id="cvv"
+                              placeholder="123"
+                              value={paymentData.cvv}
+                              onChange={(e) => setPaymentData({...paymentData, cvv: e.target.value})}
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <Label htmlFor="cardholderName">Cardholder Name</Label>
+                          <Input
+                            id="cardholderName"
+                            placeholder="John Doe"
+                            value={paymentData.cardholderName}
+                            onChange={(e) => setPaymentData({...paymentData, cardholderName: e.target.value})}
+                            required
+                          />
+                        </div>
+                        <Button 
+                          type="submit"
+                          className="w-full bg-green-600 hover:bg-green-700 mt-6"
+                          disabled={isProcessing}
+                        >
+                          {isProcessing ? "Processing Payment..." : `Pay €${getTotalPrice()}`}
+                        </Button>
+                      </form>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
 
               {/* Order Summary */}
@@ -154,13 +245,18 @@ const Checkout = () => {
                       <span className="text-swiftly-blue">€{getTotalPrice()}</span>
                     </div>
                     
-                    <Button 
-                      className="w-full bg-swiftly-blue hover:bg-swiftly-darkblue mt-6"
-                      onClick={handleProceedToPayment}
-                      disabled={isProcessing}
-                    >
-                      {isProcessing ? "Processing..." : "Proceed to Payment"}
-                    </Button>
+                    {!showPaymentForm ? (
+                      <Button 
+                        className="w-full bg-swiftly-blue hover:bg-swiftly-darkblue mt-6"
+                        onClick={handleProceedToPayment}
+                      >
+                        Proceed to Payment
+                      </Button>
+                    ) : (
+                      <div className="text-center text-sm text-gray-500 mt-4">
+                        Fill in your payment details below
+                      </div>
+                    )}
                     
                     <p className="text-xs text-gray-500 text-center mt-4">
                       By proceeding, you agree to our terms of service and privacy policy.

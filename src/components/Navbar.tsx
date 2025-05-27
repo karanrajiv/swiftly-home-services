@@ -1,8 +1,9 @@
-
 import { useState, useEffect } from 'react';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '@/contexts/CartContext';
+import { Badge } from '@/components/ui/badge';
 
 interface User {
   email: string;
@@ -13,6 +14,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { getItemCount } = useCart();
   const navigate = useNavigate();
   
   // Check if user is logged in
@@ -84,6 +86,18 @@ const Navbar = () => {
               Testimonials
             </a>
             
+            {/* Cart Icon */}
+            <Link to="/checkout" className="relative">
+              <Button variant="ghost" size="icon" className="text-gray-700 hover:text-swiftly-blue">
+                <ShoppingCart size={20} />
+                {getItemCount() > 0 && (
+                  <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                    {getItemCount()}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+            
             {currentUser ? (
               <div className="flex items-center gap-4">
                 <Link to="/dashboard" className="flex items-center gap-2 text-gray-700 hover:text-swiftly-blue font-medium">
@@ -154,6 +168,16 @@ const Navbar = () => {
               >
                 Testimonials
               </a>
+              
+              {/* Mobile Cart Icon */}
+              <Link 
+                to="/checkout" 
+                className="flex items-center gap-2 text-gray-700 hover:text-swiftly-blue font-medium py-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <ShoppingCart size={18} />
+                Cart ({getItemCount()})
+              </Link>
               
               {currentUser ? (
                 <>
