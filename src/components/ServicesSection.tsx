@@ -91,12 +91,6 @@ const ServicesSection = () => {
             </Link>
           ))}
         </div>
-        
-        <div className="text-center mt-12">
-          <button className="bg-swiftly-blue hover:bg-swiftly-darkblue text-white font-medium px-6 py-3 rounded-md transition-colors">
-            View All Services
-          </button>
-        </div>
       </div>
     </section>
   );

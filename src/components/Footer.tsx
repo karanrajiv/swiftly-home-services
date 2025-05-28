@@ -68,29 +68,29 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-white mb-6">Our Services</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="/services/home-cleaning" className="text-gray-400 hover:text-white transition-colors">
                   Home Cleaning
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="/services/plumbing" className="text-gray-400 hover:text-white transition-colors">
                   Plumbing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="/services/appliance-repair" className="text-gray-400 hover:text-white transition-colors">
                   Appliance Repair
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="/services/painting" className="text-gray-400 hover:text-white transition-colors">
                   Painting
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  View All Services
-                </a>
+                <Link to="/services/furniture-assembly" className="text-gray-400 hover:text-white transition-colors">
+                  Furniture Assembly
+                </Link>
               </li>
             </ul>
           </div>
@@ -101,15 +101,19 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="mr-3 h-5 w-5 text-swiftly-blue" />
-                <span>123 Service Lane, Tech City, CA 90210</span>
+                <span>Dublin, Ireland</span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-3 h-5 w-5 text-swiftly-blue" />
-                <span>(555) 123-4567</span>
+                <span>+353892145984</span>
+              </li>
+              <li className="flex items-center">
+                <Phone className="mr-3 h-5 w-5 text-swiftly-blue" />
+                <span>+353892477816</span>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-3 h-5 w-5 text-swiftly-blue" />
-                <span>support@swiftly.com</span>
+                <span>gowithswiftly@gmail.com</span>
               </li>
             </ul>
           </div>

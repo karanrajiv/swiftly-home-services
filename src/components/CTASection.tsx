@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const CTASection = () => {
+  const handleContactUs = () => {
+    window.location.href = "mailto:gowithswiftly@gmail.com";
+  };
+
   return (
     <section className="py-16 bg-swiftly-blue">
       <div className="container mx-auto px-4">
@@ -15,12 +19,17 @@ const CTASection = () => {
             Book your service today and enjoy hassle-free professional assistance.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/login">
+            <Link to="/services/home-cleaning">
               <Button size="lg" className="bg-white text-swiftly-blue hover:bg-gray-100 font-medium px-8 py-6 text-lg">
                 Book a Service
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-medium px-8 py-6 text-lg">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white/10 font-medium px-8 py-6 text-lg"
+              onClick={handleContactUs}
+            >
               Contact Us
             </Button>
           </div>

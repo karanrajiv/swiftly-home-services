@@ -1,12 +1,20 @@
 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wrench, Clock, Shield, Award } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/contexts/CartContext";
 
 const ApplianceRepair = () => {
+  const { toast } = useToast();
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
   const applianceCategories = {
     kitchen: {
       name: "Kitchen Appliances",
@@ -26,6 +34,28 @@ const ApplianceRepair = () => {
       description: "Climate control and hot water system repairs for year-round comfort in your home.",
       commonIssues: ["No hot water", "Poor cooling", "High energy bills", "Temperature fluctuations"]
     }
+  };
+
+  const handleAddToCart = (appliance: string, category: string) => {
+    const cartItem = {
+      id: `appliance-repair-${category}-${appliance.toLowerCase().replace(/\s+/g, '-')}`,
+      name: `${appliance} Repair`,
+      price: 0,
+      duration: "1-2 hours",
+      includes: ["Diagnosis", "Repair", "Parts (if needed)", "Testing"],
+      serviceType: "Appliance Repair"
+    };
+    
+    addItem(cartItem);
+    
+    toast({
+      title: "Added to Cart!",
+      description: `${appliance} Repair has been added to your cart.`,
+    });
+  };
+
+  const handleViewCart = () => {
+    navigate('/checkout');
   };
 
   return (
@@ -85,11 +115,21 @@ const ApplianceRepair = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="font-semibold mb-4">Appliances We Service:</h4>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3">
                         {category.items.map((appliance, index) => (
-                          <Card key={index}>
-                            <CardContent className="p-3 text-center">
-                              <h5 className="font-medium text-sm">{appliance}</h5>
+                          <Card key={index} className="cursor-pointer hover:shadow-lg transition-shadow">
+                            <CardContent className="p-4 flex justify-between items-center">
+                              <div>
+                                <h5 className="font-medium">{appliance}</h5>
+                                <p className="text-sm text-gray-600">Professional repair service</p>
+                              </div>
+                              <Button 
+                                size="sm" 
+                                className="bg-green-600 hover:bg-green-700"
+                                onClick={() => handleAddToCart(appliance, key)}
+                              >
+                                Add to Cart - €0
+                              </Button>
                             </CardContent>
                           </Card>
                         ))}
@@ -113,10 +153,20 @@ const ApplianceRepair = () => {
             </Tabs>
           </div>
 
-          <div className="text-center">
+          <div className="text-center space-y-4">
             <Button size="lg" className="bg-green-600 hover:bg-green-700 px-8 py-6 text-lg">
-              Book Repair Service - €50
+              Book General Repair Service - €0
             </Button>
+            <div>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="px-8 py-6 text-lg"
+                onClick={handleViewCart}
+              >
+                View Cart & Checkout
+              </Button>
+            </div>
           </div>
         </div>
       </div>
