@@ -3,12 +3,9 @@ import {
   Home, 
   Settings, 
   Briefcase, 
-  ShieldCheck, 
-  Clock, 
   PaintBucket, 
   Sofa, 
-  ShowerHead, 
-  Fan 
+  Scissors
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -47,22 +44,6 @@ const services = [
     link: "/services/painting"
   },
   {
-    icon: ShowerHead,
-    title: "Bathroom Cleaning",
-    description: "Spotless and sanitized bathrooms with professional cleaning.",
-    color: "bg-teal-50",
-    iconColor: "text-teal-600",
-    link: "/services/bathroom-cleaning"
-  },
-  {
-    icon: Fan,
-    title: "AC Repair & Service",
-    description: "Keep cool with our expert AC repair and maintenance.",
-    color: "bg-indigo-50",
-    iconColor: "text-indigo-600",
-    link: "/services/ac-repair"
-  },
-  {
     icon: Sofa,
     title: "Furniture Assembly",
     description: "Get your new furniture professionally assembled.",
@@ -71,12 +52,12 @@ const services = [
     link: "/services/furniture-assembly"
   },
   {
-    icon: ShieldCheck,
-    title: "Pest Control",
-    description: "Effective pest control solutions for your home.",
-    color: "bg-red-50",
-    iconColor: "text-red-600",
-    link: "/services/pest-control"
+    icon: Scissors,
+    title: "Salon Services",
+    description: "Professional beauty and grooming services at your doorstep.",
+    color: "bg-pink-50",
+    iconColor: "text-pink-600",
+    link: "/services/salon-services"
   },
 ];
 
@@ -93,7 +74,7 @@ const ServicesSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <Link key={index} to={service.link} className="service-card">
               <Card className="overflow-hidden border-0 shadow-sm hover:shadow-lg transition-all cursor-pointer group">
